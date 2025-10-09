@@ -136,6 +136,9 @@ def get_session(session_id: str):
     return sessions[session_id]
 
 # --------------------------- API Routes ---------------------------
+@app.get("/")
+def read_root():
+    return {"message": "Hello, world!"}
 @app.post("/chat")
 def chat_with_assistant(message: str = Body(..., embed=True), session_id: str = Body(..., embed=True)):
     print("hi")
@@ -223,4 +226,5 @@ def reset_conversation(session_id: str = Body("default", embed=True)):
 
 if __name__ == "__main__":
     uvicorn.run(app)
+
 
