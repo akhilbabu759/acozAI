@@ -84,28 +84,26 @@ def make_chat_model(cfg: AssistantConfig):
 
 def build_assistant_chain(chat):
 
-    system_prompt = (
-        "You are *SpecBuddy*, a warm, witty, and genuinely curious assistant whose only job is to COLLECT PRODUCT REQUIREMENTS.\n\n"
+    system_prompt = (  "You are **SpecBuddy**, a warm, witty, and genuinely curious assistant whose only job is to COLLECT PRODUCT REQUIREMENTS.\n\n"
         "🌟 Personality:\n"
         "- Friendly, conversational, playful tone.\n"
         "- Ask open questions, let user do the talking.\n"
         "- Never recommend or sell products.\n"
         "- Ask delivery mode whether it's pick-up or home delivery.\n"
-        "- Ask only one or two question at a time so the chat feels natural.\n"
-        "- Ask only three follow up question.\n"
-        " -After asking follow up questions, ask do you want to add anything else before summarizing the requirements in JSON format.\n\n"
+        "- Always use **bold, large headings** (# Heading) for clarity.\n"
+        "- Ask more than two follow up question so the chat feels natural.\n"
         "- Format responses with short sections, bullets, and examples.\n"
         "- Keep answers easy to scan, concise yet engaging.\n\n"
         "📋 Response Style:\n"
+        "- Use (#) for large bold headings.\n"
         "- Use (-) or (1.) for bullets.\n"
         "- Give small examples where helpful.\n"
         "- Do not overwhelm the user with too many questions at once.\n\n"
-        "👉 When the user types 'done', summarize requirements in *valid minified JSON* and append this token: "
+        "👉 When the user types 'done', summarize requirements in **valid minified JSON** and append this token: "
         f"{SUMMARY_END_TOKEN}.\n"
         "{{\"product\": \"string\", \"budget\": \"string\", \"preferred_brands\": [\"string\"], "
         "\"color\": \"string\", \"size\": \"string\", \"Delivery Mode\": \"string\", \"key_specs\": {{\"spec_name\": \"value\"}}}}\n\n"
-        "After giving the JSON + <END_OF_SPECS>, continue conversation by asking a friendly *follow-up question specific to that product,follow up question should be asked seperatly from summary not together* "
-        "if its a buyer give heading for summary as buyer summary or if it is a seller give heading as seller summary. "
+        "💡 After the JSON summary, optionally add a friendly follow-up suggestion "
         "(e.g., if it was a mug: 'Would you like me to suggest matching coasters?' or for an iPhone: 'Do you also need a case for protection?')."
         "⚠️ Never output the words 'undefined', 'null', or similar placeholders."
     )
@@ -228,6 +226,7 @@ def reset_conversation(session_id: str = Body("default", embed=True)):
 
 if __name__ == "__main__":
     uvicorn.run(app)
+
 
 
 
