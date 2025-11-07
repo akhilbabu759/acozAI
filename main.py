@@ -132,6 +132,10 @@ def get_session(session_id: str):
     return sessions[session_id]
 
 # --------------------------- Routes ---------------------------
+@app.get("/", response_class=HTMLResponse)
+async def root():
+    return "<h1>Hello — root works</h1>"
+    
 @app.post("/chat")
 def chat_with_assistant(message: str = Body(..., embed=True), session_id: str = Body(..., embed=True)):
     """Main chat endpoint for SpecBuddy."""
@@ -181,3 +185,4 @@ def reset_conversation(session_id: str = Body("default", embed=True)):
 # --------------------------- Run ---------------------------
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
